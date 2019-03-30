@@ -1,13 +1,13 @@
 import * as React from 'react'
 
-import { JgqlContext } from './context'
-import { JgqlError } from './sendRequestFunction'
+import { HgqlContext } from './context'
+import { HgqlError } from './sendRequestFunction'
 
 export { gql } from './gql'
 export {
   SendRequestFunction,
   createSendRequestFunction,
-  JgqlError,
+  HgqlError,
 } from './sendRequestFunction'
 
 const { useState } = React
@@ -24,9 +24,9 @@ export interface SuccessState<D extends object> {
 }
 export interface ErrorState {
   state: 'ERROR'
-  error: JgqlError
+  error: HgqlError
 }
-export type JgqlData<D extends object> =
+export type HgqlData<D extends object> =
   | InitialState
   | LoadingState
   | SuccessState<D>
@@ -37,7 +37,7 @@ export type ExecuteQueryFunc<V> = (vars: V | undefined) => void
 export const useManualQuery = <D extends object, V extends object = never>(
   queryString: string,
   variables?: V,
-): [JgqlData<D>, ExecuteQueryFunc<V>] => {
+): [HgqlData<D>, ExecuteQueryFunc<V>] => {
   const isMounted = React.useRef(true)
   React.useEffect(() => {
     isMounted.current = true
@@ -46,9 +46,9 @@ export const useManualQuery = <D extends object, V extends object = never>(
     }
   }, [])
 
-  const sendRequest = React.useContext(JgqlContext)
+  const sendRequest = React.useContext(HgqlContext)
 
-  const [queryState, setQueryState] = useState<JgqlData<D>>({
+  const [queryState, setQueryState] = useState<HgqlData<D>>({
     state: 'INITIAL',
   })
 
@@ -82,7 +82,7 @@ export const useManualQuery = <D extends object, V extends object = never>(
 export const useQuery = <D extends object, V extends object = never>(
   queryString: string,
   variables?: V,
-): [JgqlData<D>, ExecuteQueryFunc<V>] => {
+): [HgqlData<D>, ExecuteQueryFunc<V>] => {
   const [queryState, executeQuery] = useManualQuery<D, V>(
     queryString,
     variables,

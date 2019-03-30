@@ -6,7 +6,7 @@ export type SendRequestFunction = <R extends object, V extends object = object>(
   variables?: V,
 ) => Promise<R>
 
-export class JgqlError extends Error {
+export class HgqlError extends Error {
   private _graphQLErrors: null | GraphQLError[] = null
   private _responseError: null | { status: number; data: string } = null
   private _errorMessage: null | string = null
@@ -33,7 +33,7 @@ export class JgqlError extends Error {
     }
 
     this.message = this.toString()
-    ;(this as any).__proto__ = JgqlError.prototype
+    ;(this as any).__proto__ = HgqlError.prototype
   }
 
   get type() {
@@ -74,7 +74,7 @@ export interface Params {
     request: AxiosRequestConfig,
   ) => AxiosRequestConfig | Promise<AxiosRequestConfig>
   processResponse?: (response: any) => any | Promise<any>
-  processError?: (error: JgqlError) => any | Promise<any>
+  processError?: (error: HgqlError) => any | Promise<any>
 }
 
 const augmentRequestDefault = async (request: AxiosRequestConfig) => request
@@ -104,7 +104,7 @@ export const createSendRequestFunction = ({
     const processedResponse = await processResponse(response)
     return processedResponse.data
   } catch (error) {
-    const jgqlError = new JgqlError(error)
+    const jgqlError = new HgqlError(error)
     throw processError(jgqlError)
   }
 }

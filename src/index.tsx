@@ -4,6 +4,7 @@ import { HgqlContext } from './context'
 import { HgqlError } from './sendRequestFunction'
 
 export { gql } from './gql'
+export { HgqlContext } from './context'
 export {
   SendRequestFunction,
   createSendRequestFunction,

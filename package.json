@@ -1,25 +1,26 @@
 {
-  "name": "hgql",
-  "version": "0.0.4",
-  "main": "./dist/index.js",
-  "typings": "./dist/index.d.ts",
-  "license": "Apache-2.0",
-  "scripts": {
-    "build": "tsc --pretty",
-    "watch": "tsc --watch --pretty",
-    "prepare": "npm run build"
-  },
-  "dependencies": {
-    "axios": "^0.18.0",
-    "graphql": "^14.2.0"
-  },
-  "peerDependencies": {
-    "react": ">=16.8.0"
-  },
-  "devDependencies": {
-    "@types/graphql": "^14.2.0",
-    "@types/node": "^11.12.1",
-    "@types/react": "^16.8.10",
-    "typescript": "^3.4.1"
-  }
+    "name": "hgql",
+    "version": "0.0.5",
+    "main": "./dist/index.js",
+    "typings": "./dist/index.d.ts",
+    "license": "Apache-2.0",
+    "scripts": {
+        "build": "tsc --pretty",
+        "watch": "tsc --watch --pretty",
+        "prepare": "npm run build"
+    },
+    "dependencies": {
+        "axios": "^0.19.2",
+        "graphql": "^15.2.0"
+    },
+    "peerDependencies": {
+        "react": ">=16.8.0"
+    },
+    "devDependencies": {
+        "@types/graphql": "^14.5.0",
+        "@types/node": "^14.0.14",
+        "@types/react": "^16.9.41",
+        "react": ">=16.8.0",
+        "typescript": "^3.9.6"
+    }
 }

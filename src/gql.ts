@@ -1,3 +1,5 @@
+import compress from 'graphql-query-compress'
+
 export const gql = (strs: TemplateStringsArray, ...values: any[]) => {
   let ret = ''
   for (let i = 0; i < strs.length; i++) {
@@ -6,5 +8,5 @@ export const gql = (strs: TemplateStringsArray, ...values: any[]) => {
       ret += values[i]
     }
   }
-  return ret
+  return compress(ret)
 }

@@ -6,7 +6,8 @@
     "declaration": true,
     "strict": true,
     "lib": ["es2015"],
-    "outDir": "dist"
+    "outDir": "dist",
+    "esModuleInterop": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

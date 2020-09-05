@@ -25,12 +25,17 @@ interface ErrorState {
 }
 type HgqlData<D extends object> = InitialState | LoadingState | SuccessState<D> | ErrorState
 
-type ExecuteQueryFunc<V> = (vars: V | undefined) => void
+type ExecuteQueryFunc<V> = (vars?: V) => void
 
-export const useManualQuery = <D extends object, V extends object = never>(
+export function useManualQuery<D extends object>(queryString: string): [HgqlData<D>, () => void]
+export function useManualQuery<D extends object, V extends object>(
+    queryString: string,
+    variables: V
+): [HgqlData<D>, (vars: V) => void]
+export function useManualQuery<D extends object, V extends object>(
     queryString: string,
     variables?: V
-): [HgqlData<D>, ExecuteQueryFunc<V>] => {
+): [HgqlData<D>, ExecuteQueryFunc<V>] {
     const isMounted = React.useRef(true)
     React.useEffect(() => {
         isMounted.current = true
@@ -72,17 +77,32 @@ export const useManualQuery = <D extends object, V extends object = never>(
     return [queryState, executeQuery]
 }
 
-export const useQuery = <D extends object, V extends object = never>(
+export function useQuery<D extends object>(queryString: string): [HgqlData<D>, () => void]
+export function useQuery<D extends object, V extends object>(
     queryString: string,
-    variables?: V
-): [HgqlData<D>, ExecuteQueryFunc<V>] => {
-    const [queryState, executeQuery] = useManualQuery<D, V>(queryString, variables)
+    variables: V
+): [HgqlData<D>, (vars: V) => void]
+export function useQuery<D extends object, V extends object = never>(queryString: string, variables?: V) {
+    // TODO move useEffect outside if statement
+    if (variables) {
+        const [queryState, executeQuery] = useManualQuery<D, V>(queryString, variables)
 
-    React.useEffect(() => {
-        executeQuery(variables)
-    }, [queryString])
+        React.useEffect(() => {
+            executeQuery(variables)
+        }, [queryString])
 
-    return [queryState, executeQuery]
+        return [queryState, executeQuery]
+    } else {
+        const [queryState, executeQuery] = useManualQuery<D>(queryString)
+
+        React.useEffect(() => {
+            executeQuery()
+        }, [queryString])
+
+        return [queryState, executeQuery]
+    }
 }
 
-export const useMutation = useManualQuery
+export const useMutation = <D extends object, V extends object>(
+    queryString: string
+): [HgqlData<D>, (vars: V) => void] => useManualQuery<D, V>(queryString, (undefined as unknown) as V)

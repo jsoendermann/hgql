@@ -8,5 +8,5 @@ export const gql = (strs: TemplateStringsArray, ...values: any[]) => {
       ret += values[i]
     }
   }
-  return compress(ret)
+  return compress(ret).trim()
 }

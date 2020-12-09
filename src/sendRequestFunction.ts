@@ -77,9 +77,9 @@ export interface Params {
   processError?: (error: HgqlError) => any | Promise<any>
 }
 
-const augmentRequestDefault = async (request: AxiosRequestConfig) => request
-const processResponseDefault = async (response: any) => response
-const processErrorDefault = async (error: Error) => error.message
+const augmentRequestDefault = (request: AxiosRequestConfig) => request
+const processResponseDefault = (response: any) => response
+const processErrorDefault = (error: Error) => error.message
 
 export const createSendRequestFunction = ({
   getUrl,
